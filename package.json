@@ -1,0 +1,8 @@
+{
+  "name": "thug-gaming-hub-monolith",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "cd client && npm install && npm run build && cd ../server && npm install"
+  }
+}
