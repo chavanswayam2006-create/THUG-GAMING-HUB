@@ -31,7 +31,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-6xl md:text-8xl lg:text-[7rem] font-black uppercase tracking-tighter mb-2 text-[#ff9e80] drop-shadow-[0_4px_2px_rgba(0,0,0,0.8)]"
+            className="text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] font-black uppercase tracking-tighter mb-2 text-[#ff9e80] drop-shadow-[0_4px_2px_rgba(0,0,0,0.8)]"
             style={{ WebkitTextStroke: '2px #5a1811' }}
           >
             {siteConfig.name}
@@ -41,7 +41,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="text-2xl md:text-4xl font-black uppercase tracking-wider text-[#ffcf9e] mb-12 drop-shadow-lg"
+            className="text-xl sm:text-2xl md:text-4xl font-black uppercase tracking-wider text-[#ffcf9e] mb-12 drop-shadow-lg"
           >
             Where Legends Are Forged.
           </motion.h2>
@@ -63,7 +63,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="text-4xl md:text-5xl font-black uppercase tracking-tight text-[#ffc1b2] drop-shadow-lg"
+            className="text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-[#ffc1b2] drop-shadow-lg"
            >
              Forged In Fire, Born For Glory
            </motion.h2>

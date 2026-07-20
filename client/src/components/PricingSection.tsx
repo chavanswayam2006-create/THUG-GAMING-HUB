@@ -142,7 +142,7 @@ export default function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="relative bg-[#080808]/80 backdrop-blur-sm border border-[#ff4040]/30 p-8 md:-translate-y-4 transition-all duration-300 hover:border-[#ff4040]/50 hover:shadow-[0_0_30px_rgba(255,64,64,0.15)]"
+            className="relative bg-[#080808]/80 backdrop-blur-sm border border-[#ff4040]/30 p-8 transform md:-translate-y-4 transition-all duration-300 hover:border-[#ff4040]/50 hover:shadow-[0_0_30px_rgba(255,64,64,0.15)] my-8 md:my-0"
           >
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#ffc1b2] text-[#050505] text-[10px] font-black tracking-widest px-4 py-1 uppercase rounded-sm shadow-md">
               Most Popular

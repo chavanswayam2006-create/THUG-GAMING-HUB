@@ -21,10 +21,15 @@ export default function GamesGallery() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0505] to-transparent z-0 pointer-events-none" />
       
       <div className="container mx-auto relative z-10 px-4 mb-24 text-center">
-        <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#ffcf9e] mb-4 drop-shadow-lg scale-y-110">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#ffcf9e] mb-4 drop-shadow-lg scale-y-110">
           The Arsenal
         </h1>
-        <p className="text-gray-400 uppercase tracking-widest text-sm">Choose Your Battlefield.</p>
+        <p className="text-gray-400 uppercase tracking-widest text-sm mb-4">Choose Your Battlefield.</p>
+        <div className="inline-block bg-red-900/30 border border-red-500/30 px-6 py-2 rounded-sm backdrop-blur-sm">
+          <p className="text-[#ff9e80] text-xs md:text-sm uppercase tracking-widest font-bold text-center">
+             Notice: Please make an inquiry in advance for PS5 game availability.
+          </p>
+        </div>
       </div>
 
       <div className="relative z-20 w-full overflow-x-hidden flex items-center py-8">
@@ -39,7 +44,7 @@ export default function GamesGallery() {
           {[...games, ...games].map((game, i) => (
             <div
               key={`${game.id}-${i}`}
-              className="relative w-[320px] md:w-[400px] shrink-0 rounded-lg overflow-hidden bg-black shadow-[0_0_50px_rgba(255,207,158,0.1)] border-2 border-[#ff9e80]/20 group flex flex-col"
+              className="relative w-[280px] sm:w-[320px] md:w-[400px] shrink-0 rounded-lg overflow-hidden bg-black shadow-[0_0_50px_rgba(255,207,158,0.1)] border-2 border-[#ff9e80]/20 group flex flex-col"
             >
               {/* Image container with fixed aspect ratio */}
               <div className="relative w-full aspect-video overflow-hidden">
