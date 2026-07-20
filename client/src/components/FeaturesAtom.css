@@ -1,0 +1,167 @@
+/* ═══════════════════════════════════════════════
+   ATOM ANIMATION — Pure CSS 3D Orbiting Atom
+   ═══════════════════════════════════════════════ */
+
+.atom-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 800px;
+}
+
+/* ── Floating Particles ── */
+.atom-particle {
+  position: absolute;
+  background: #ff4040;
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat linear infinite;
+  box-shadow: 0 0 6px 2px rgba(255, 64, 64, 0.6);
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(1.2);
+  }
+}
+
+/* ── 3D Scene ── */
+.atom-scene {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  transform-style: preserve-3d;
+  animation: atomFloat 6s ease-in-out infinite;
+}
+
+@keyframes atomFloat {
+  0%, 100% { transform: translateY(0) rotateY(0deg); }
+  50% { transform: translateY(-15px) rotateY(10deg); }
+}
+
+/* ── Nucleus ── */
+.atom-nucleus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  z-index: 10;
+}
+
+.atom-nucleus-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff6666, #cc0000 60%, #990000);
+  box-shadow:
+    0 0 30px 10px rgba(255, 40, 40, 0.6),
+    0 0 60px 20px rgba(255, 40, 40, 0.3),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.4);
+  animation: nucleusPulse 2s ease-in-out infinite;
+}
+
+@keyframes nucleusPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 30px 10px rgba(255, 40, 40, 0.6),
+      0 0 60px 20px rgba(255, 40, 40, 0.3),
+      inset 0 -4px 8px rgba(0, 0, 0, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 40px 15px rgba(255, 40, 40, 0.8),
+      0 0 80px 30px rgba(255, 40, 40, 0.4),
+      inset 0 -4px 8px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+.atom-nucleus-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 40, 40, 0.25) 0%, transparent 70%);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+}
+
+/* ── Orbits (shared) ── */
+.atom-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 240px;
+  height: 240px;
+  margin-top: -120px;
+  margin-left: -120px;
+  border: 2px solid rgba(255, 64, 64, 0.35);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+}
+
+/* ── Individual orbit rotations ── */
+.atom-orbit-1 {
+  transform: rotateX(70deg) rotateZ(0deg);
+  animation: orbitSpin1 4s linear infinite;
+}
+.atom-orbit-2 {
+  transform: rotateX(70deg) rotateZ(60deg);
+  animation: orbitSpin2 5s linear infinite;
+}
+.atom-orbit-3 {
+  transform: rotateX(70deg) rotateZ(120deg);
+  animation: orbitSpin3 6s linear infinite;
+}
+
+@keyframes orbitSpin1 {
+  from { transform: rotateX(70deg) rotateZ(0deg) rotateY(0deg); }
+  to   { transform: rotateX(70deg) rotateZ(0deg) rotateY(360deg); }
+}
+@keyframes orbitSpin2 {
+  from { transform: rotateX(70deg) rotateZ(60deg) rotateY(0deg); }
+  to   { transform: rotateX(70deg) rotateZ(60deg) rotateY(360deg); }
+}
+@keyframes orbitSpin3 {
+  from { transform: rotateX(70deg) rotateZ(120deg) rotateY(0deg); }
+  to   { transform: rotateX(70deg) rotateZ(120deg) rotateY(360deg); }
+}
+
+/* ── Electrons ── */
+.atom-electron {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 0 10px 4px rgba(255, 64, 64, 0.8),
+    0 0 20px 8px rgba(255, 64, 64, 0.4);
+}

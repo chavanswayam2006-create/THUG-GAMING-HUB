@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — THUG Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'thug-dark': '#050505',
+            'thug-black': '#0a0a0a',
+            'neon-purple': '#9d4edd',
+            'neon-cyan': '#00f5ff'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-thug-dark text-white min-h-screen pt-12 pb-20 px-4 font-sans">
+  <div class="container mx-auto max-w-7xl">
+    <h1 class="text-3xl font-black uppercase tracking-widest text-neon-cyan mb-8 border-b border-white/10 pb-4">
+      Backend Admin Dashboard
+    </h1>
+
+    <div class="flex gap-4 mb-8">
+      <button id="tab-bookings" class="px-6 py-2 font-bold uppercase tracking-widest text-sm rounded-sm bg-neon-cyan text-thug-dark transition-colors" onclick="switchTab('bookings')">
+        Manage Bookings
+      </button>
+      <button id="tab-tournaments" class="px-6 py-2 font-bold uppercase tracking-widest text-sm rounded-sm bg-white/5 text-white hover:bg-white/10 transition-colors" onclick="switchTab('tournaments')">
+        Manage Tournaments
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Forms Section -->
+      <div class="lg:col-span-1 bg-thug-black p-6 border border-white/5 rounded-sm">
+        <h2 id="form-title" class="text-xl font-bold uppercase mb-6 text-gray-300">Add Booking</h2>
+        
+        <!-- Bookings Form -->
+        <form id="bookings-form" class="space-y-4 block">
+          <input name="customerName" placeholder="Customer Name" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan" />
+          <input name="phone" placeholder="Phone" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan" />
+          <input type="date" name="date" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan" />
+          <input type="time" name="timeSlot" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan" />
+          <select name="station" class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan">
+            <option value="PC 1">PC 1</option>
+            <option value="PC 2">PC 2</option>
+            <option value="PS5 1">PS5 1</option>
+          </select>
+          <div class="flex gap-2">
+            <input type="number" name="duration" placeholder="Hours" required class="w-1/2 bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan" />
+            <input type="number" name="amount" placeholder="Base ₹" required class="w-1/2 bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan" />
+            <input type="number" name="foodCharges" placeholder="Food ₹" class="w-1/2 bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan" />
+          </div>
+          <textarea name="notes" placeholder="Notes" class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-cyan"></textarea>
+          <button type="submit" class="w-full bg-neon-cyan text-thug-dark font-bold p-3 uppercase text-sm hover:bg-white transition-colors">Save Booking</button>
+        </form>
+
+        <!-- Tournaments Form -->
+        <form id="tournaments-form" class="space-y-4 hidden">
+          <input name="name" placeholder="Tournament Name" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <input name="game" placeholder="Game" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <input type="date" name="date" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <input type="time" name="time" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <input type="number" name="entryFee" placeholder="Entry Fee (₹)" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <input type="number" name="prizePool" placeholder="Prize Pool (₹)" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <input type="number" name="maxSlots" placeholder="Max Slots" required class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <input name="bannerUrl" placeholder="Banner Image URL" class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <input name="registrationUrl" placeholder="Google Form URL (Optional)" class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple" />
+          <textarea name="description" placeholder="Description/Rules" class="w-full bg-thug-dark p-2 border border-white/10 text-sm focus:outline-none focus:border-neon-purple"></textarea>
+          <button type="submit" class="w-full bg-neon-purple text-white font-bold p-3 uppercase text-sm hover:bg-white hover:text-thug-dark transition-colors">Save Tournament</button>
+        </form>
+      </div>
+
+      <!-- Table Section -->
+      <div class="lg:col-span-2 bg-thug-black p-6 border border-white/5 rounded-sm overflow-x-auto">
+        <h2 class="text-xl font-bold uppercase mb-6 text-gray-300">Records</h2>
+        <table class="w-full text-left text-sm text-gray-300">
+          <thead id="table-head" class="lowercase text-gray-500 border-b border-white/10">
+            <!-- Headers dynamically injected -->
+          </thead>
+          <tbody id="table-body" class="divide-y divide-white/5">
+            <!-- Data dynamically injected -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let activeTab = 'bookings';
+    let bookingsData = [];
+    let tournamentsData = [];
+    let editingBookingId = null;
+
+    // Fetch Data
+    async function fetchBookings() {
+      const res = await fetch('/api/bookings');
+      bookingsData = await res.json();
+      if (activeTab === 'bookings') renderTable();
+    }
+
+    async function fetchTournaments() {
+      const res = await fetch('/api/tournaments');
+      tournamentsData = await res.json();
+      if (activeTab === 'tournaments') renderTable();
+    }
+
+    // Switch Tabs
+    function switchTab(tab) {
+      activeTab = tab;
+      
+      const btnBooking = document.getElementById('tab-bookings');
+      const btnTournament = document.getElementById('tab-tournaments');
+      const formBooking = document.getElementById('bookings-form');
+      const formTournament = document.getElementById('tournaments-form');
+      const title = document.getElementById('form-title');
+
+      if (tab === 'bookings') {
+        btnBooking.className = "px-6 py-2 font-bold uppercase tracking-widest text-sm rounded-sm bg-neon-cyan text-thug-dark transition-colors";
+        btnTournament.className = "px-6 py-2 font-bold uppercase tracking-widest text-sm rounded-sm bg-white/5 text-white hover:bg-white/10 transition-colors";
+        formBooking.classList.remove('hidden');
+        formTournament.classList.add('hidden');
+        title.innerText = 'Add Booking';
+      } else {
+        btnTournament.className = "px-6 py-2 font-bold uppercase tracking-widest text-sm rounded-sm bg-neon-purple text-white transition-colors";
+        btnBooking.className = "px-6 py-2 font-bold uppercase tracking-widest text-sm rounded-sm bg-white/5 text-white hover:bg-white/10 transition-colors";
+        formTournament.classList.remove('hidden');
+        formBooking.classList.add('hidden');
+        title.innerText = 'Add Tournament';
+      }
+      
+      editingBookingId = null;
+      renderTable();
+    }
+
+    // Render Table
+    function renderTable() {
+      const thead = document.getElementById('table-head');
+      const tbody = document.getElementById('table-body');
+      thead.innerHTML = '';
+      tbody.innerHTML = '';
+
+      if (activeTab === 'bookings') {
+        thead.innerHTML = `
+          <tr>
+            <th class="pb-3 font-normal">Customer</th>
+            <th class="pb-3 font-normal">Date / Time</th>
+            <th class="pb-3 font-normal">Station</th>
+            <th class="pb-3 font-normal">Amt</th>
+            <th class="pb-3 font-normal text-right">Action</th>
+          </tr>
+        `;
+        
+        bookingsData.forEach(b => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-thug-dark/50 transition-colors";
+          
+          if (editingBookingId === b.id) {
+            tr.innerHTML = `
+              <td class="py-4 font-bold">${b.customerName} <br/><span class="text-xs text-gray-500">${b.phone}</span></td>
+              <td colspan="3" class="py-2">
+                <form onsubmit="handleEditBooking(event, ${b.id})" class="flex gap-2">
+                  <input name="timeSlot" value="${b.timeSlot}" class="bg-thug-dark w-24 p-1 text-sm border border-neon-cyan" />
+                  <input name="amount" value="${b.amount}" type="number" class="bg-thug-dark w-20 p-1 text-sm border border-neon-cyan" placeholder="Amt" />
+                  <input name="foodCharges" value="${b.foodCharges || 0}" type="number" class="bg-thug-dark w-20 p-1 text-sm border border-neon-cyan" placeholder="Food" />
+                  <button type="submit" class="px-3 bg-neon-cyan text-thug-dark font-bold text-xs rounded-sm">Save</button>
+                  <button type="button" onclick="cancelEdit()" class="px-3 bg-gray-500 text-white font-bold text-xs rounded-sm">Cancel</button>
+                </form>
+              </td>
+              <td class="py-4 text-right">
+                <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-400">Delete</button>
+              </td>
+            `;
+          } else {
+            tr.innerHTML = `
+              <td class="py-4 font-bold">${b.customerName} <br/><span class="text-xs text-gray-500">${b.phone}</span></td>
+              <td class="py-4">${b.date} <br/><span class="text-xs text-neon-cyan">${b.timeSlot}</span></td>
+              <td class="py-4">${b.station} (${b.duration}h)</td>
+              <td class="py-4">
+                <span class="text-green-500">₹${b.amount}</span>
+                <br/><span class="text-xs text-orange-400">Food: ₹${b.foodCharges || 0}</span>
+              </td>
+              <td class="py-4 text-right">
+                <button onclick="editBooking(${b.id})" class="text-neon-cyan hover:text-white mr-4">Edit</button>
+                <button onclick="deleteBooking(${b.id})" class="text-red-500 hover:text-red-400">Delete</button>
+              </td>
+            `;
+          }
+          tbody.appendChild(tr);
+        });
+      } else {
+        thead.innerHTML = `
+          <tr>
+            <th class="pb-3 font-normal">Tournament</th>
+            <th class="pb-3 font-normal">Game</th>
+            <th class="pb-3 font-normal">Date</th>
+            <th class="pb-3 font-normal text-right">Action</th>
+          </tr>
+        `;
+        
+        tournamentsData.forEach(t => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-thug-dark/50 transition-colors";
+          tr.innerHTML = `
+            <td class="py-4 text-neon-purple font-bold">${t.name}</td>
+            <td class="py-4">${t.game}</td>
+            <td class="py-4">${t.date} ${t.time}</td>
+            <td class="py-4 text-right">
+              <button onclick="deleteTournament(${t.id})" class="text-red-500 hover:text-red-400">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    // Forms Handlers
+    document.getElementById('bookings-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      e.target.reset();
+      fetchBookings();
+    });
+
+    document.getElementById('tournaments-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      await fetch('/api/tournaments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      e.target.reset();
+      fetchTournaments();
+    });
+
+    // Actions
+    async function deleteBooking(id) {
+      if(!confirm("Are you sure?")) return;
+      await fetch('/api/bookings/' + id, { method: 'DELETE' });
+      fetchBookings();
+    }
+
+    async function deleteTournament(id) {
+      if(!confirm("Are you sure?")) return;
+      await fetch('/api/tournaments/' + id, { method: 'DELETE' });
+      fetchTournaments();
+    }
+
+    function editBooking(id) {
+      editingBookingId = id;
+      renderTable();
+    }
+
+    function cancelEdit() {
+      editingBookingId = null;
+      renderTable();
+    }
+
+    async function handleEditBooking(e, id) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      await fetch('/api/bookings/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      editingBookingId = null;
+      fetchBookings();
+    }
+
+    // Init
+    fetchBookings();
+    fetchTournaments();
+  </script>
+</body>
+</html>
