@@ -22,6 +22,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root route redirects to admin
+app.get('/', (req, res) => {
+  res.redirect('/admin');
+});
+
 // Serve static files from the public folder (admin UI)
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/admin', (req, res) => {
